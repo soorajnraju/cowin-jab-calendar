@@ -7,28 +7,17 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import reactDom from 'react-dom';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import swal from 'sweetalert';
 
 function Home() {
+    const localizer = momentLocalizer(moment);
 
     const [states, setStates] = useState([]);
     const [districts, setDistricts] = useState([]);
-
-    const localizer = momentLocalizer(moment);
-
     const [districtId, setDistrictId] = useState([]);
     const [jabsEvents, setJabsEvents] = useState([]);
     const [jabsEventsKey, setJabsEventsKey] = useState(0);
-    const [jabsDate, setJabsDate] = useState(null);
     const [ajaxLoading, setAjaxLoading] = useState(false);
-
-    let myEventsList = [
-        {
-            'title': 'My event',
-            'allDay': false,
-            'start': new Date(2021, 4, 15, 10, 0), // 10.00 AM
-            'end': new Date(2021, 4, 15, 14, 0), // 2.00 PM 
-        }
-    ];
 
     useEffect(() => {
         setAjaxLoading(true);
@@ -62,26 +51,22 @@ function Home() {
         setDistrictId(event.target.value);
     }
 
-    const _setJabsDate = (event) => {
-        let tempDate = event.target.value.split('-');
-        let newDate = tempDate[2] + "-" + tempDate[1] + "-" + tempDate[0];
-        setJabsDate(newDate);
+    const showEventModal = (event) => {
+        swal("Age Limit: "+event.item.min_age_limit+
+        "+"+"\n"+"Vaccine:"+event.item.vaccine+"\n"+
+        "Address:"+"\n"+event.item.address+"\n"+"Pin: "+event.item.pincode+"\n"+
+        "Fees: "+event.item.fee+" Rs"+"\n"+"Available Capacity: "+event.item.available_capacity);
     }
 
     const getJabsEvents = () => {
-        //let date = jabsDate;
-        //console.log(jabsDate);
-
         const today = new Date();
 
         let dates = [today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear()];
         for (let i = 1; i < 8; i++) {
             let tempDate = new Date(new Date().setDate(new Date().getDate() + i))
-            //console.log(i);
             dates.push(tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear());
         }
 
-        //console.log(dates);
         let sessionsTemp = [];
         setJabsEvents([]);
         setAjaxLoading(true);
@@ -93,13 +78,13 @@ function Home() {
                         if (result.sessions !== undefined) {
                             result.sessions.map((item, index) => {
                                 let temp = [];
-                                temp['title'] = item.name + "-" + item.min_age_limit + "+-" + item.vaccine;
+                                temp['title'] = item.name + "-" + item.min_age_limit + "+(" + item.vaccine + ")";
                                 temp['allDay'] = true;
                                 let tempDate = item.date.split('-');
                                 temp['start'] = new Date(tempDate[2], tempDate[1] - 1, tempDate[0]);
                                 temp['end'] = new Date(tempDate[2], tempDate[1] - 1, tempDate[0]);
+                                temp['item'] = item;
                                 sessionsTemp.push(temp);
-                                //console.log(temp);
                             })
                         }
                     },
@@ -117,7 +102,7 @@ function Home() {
 
     return (
         <div className="container">
-            <div className="title">Jab Slot Checker</div>
+            <div className="title">Vaccine Availability Checker</div>
             <div className="form-wrapper">
                 <form>
                     <div className="form-elements">
@@ -142,10 +127,6 @@ function Home() {
                             ))}
                         </select>
                     </div>
-                    {/* <div className="form-elements">
-                        <label for="input-date">Date: </label>
-                        <input type="date" id="input-date" name="input_date" onChange={_setJabsDate} required/>
-                    </div> */}
                     <div className="form-elements">
                         <button type="button" class="btn btn-go" onClick={getJabsEvents}>Go</button>
                     </div>
@@ -159,6 +140,7 @@ function Home() {
                     endAccessor="end"
                     style={{ height: 500 }}
                     key={jabsEventsKey}
+                    onSelectEvent={event => showEventModal(event)}
                 />
             </div>
             {ajaxLoading &&
@@ -174,7 +156,8 @@ function Home() {
             <div className="footer">
                 <p>
                     This cowin calendar has been created using the APIs provided by the https://apisetu.gov.in and its created as a study material of mine.
-                    Developer of this will not be responsibe for any kind of loss.
+                    I will not be responsibe for any kind of loss or any other kind of difficulties which
+                    can be caused due this app.
                 </p>
             </div>
         </div>
