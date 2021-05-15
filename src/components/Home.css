@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+.container {
+  max-width: 1190px;
+  margin: 10% auto;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+  font-family: 'Railway, Helvetica, sans-serif';
+}
+
+.container .loader {
+  position: absolute;
+  top: 70%;
+  left: 45%;
+}
+
+.container .footer {
+  margin-top: 10px;
+  position: absolute;
+  text-align: center;
+}
+
+.container .title {
+  padding: 10px;
+  width: 200px;
+  margin: 0 auto;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+
+.container form {
+  width: 800px;
+  height: 35px;
+  margin: 0 auto;
+}
+
+.container form .form-elements {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.container form .form-elements select {
+  width: 200px;
+  height: 20px;
+  border-radius: 5px;
+  border-color: burlywood;
+}
+
+.container form .form-elements .btn {
+  width: 80px;
+  height: 25px;
+  font-weight: 600;
+  border: #000;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.container form .form-elements .btn-go {
+  background-color: #ae8c7f;
+}
+
+.container form .form-elements input[type=date] {
+  border-radius: 5px;
+  border-color: burlywood;
+}
+
+.container .calendar {
+  margin: 50px;
+}
+/*# sourceMappingURL=Home.css.map */
