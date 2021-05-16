@@ -20,6 +20,11 @@
     background-color: #fff;
     font-family: 'Railway, Helvetica, sans-serif';
 
+    .banner{
+        img{
+            max-width: 100%;
+        }
+    }
     .title {
         color:crimson;
         padding: 10px;
