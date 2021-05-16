@@ -1,6 +1,7 @@
 # Getting Started with Cowin Jab Calendar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+and use this URL for see how it will look like after build https://soorajnraju.com/cowin-jab-calendar/
 
 ## Available Scripts
 
