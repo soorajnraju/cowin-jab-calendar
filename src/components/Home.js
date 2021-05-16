@@ -8,6 +8,7 @@ import reactDom from 'react-dom';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import swal from 'sweetalert';
+import banner from '../assets/images/vaccine.jpg';
 
 function Home() {
     const localizer = momentLocalizer(moment);
@@ -102,6 +103,9 @@ function Home() {
 
     return (
         <div className="container">
+            <div className="banner">
+                <img src={banner}></img>
+            </div>
             <div className="title">Vaccine Availability Checker</div>
             <div className="form-wrapper">
                 <form>
