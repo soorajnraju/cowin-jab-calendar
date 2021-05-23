@@ -15,7 +15,7 @@ function Home() {
 
     const [states, setStates] = useState([]);
     const [districts, setDistricts] = useState([]);
-    const [districtId, setDistrictId] = useState([]);
+    const [districtId, setDistrictId] = useState(363); //Pune
     const [jabsEvents, setJabsEvents] = useState([]);
     const [jabsEventsKey, setJabsEventsKey] = useState(0);
     const [ajaxLoading, setAjaxLoading] = useState(false);
@@ -32,7 +32,18 @@ function Home() {
                 (error) => {
                 }
             )
+        getJabsEvents();
     }, [])
+
+    const eventStyleGetter = (event, start, end, isSelected) => {
+        var backgroundColor = event.item.color;
+        var style = {
+            backgroundColor: backgroundColor,
+        };
+        return {
+            style: style
+        };
+    }
 
     const getDistricts = (event) => {
         setAjaxLoading(true);
@@ -53,10 +64,12 @@ function Home() {
     }
 
     const showEventModal = (event) => {
+        console.log(event.item);
         swal("Age Limit: "+event.item.min_age_limit+
         "+"+"\n"+"Vaccine:"+event.item.vaccine+"\n"+
         "Address:"+"\n"+event.item.address+"\n"+"Pin: "+event.item.pincode+"\n"+
-        "Fees: "+event.item.fee+" Rs"+"\n"+"Available Capacity: "+event.item.available_capacity);
+        "Fees: "+event.item.fee+" Rs"+"\n"+"Available Capacity Dose1: "+event.item.available_capacity_dose1
+        +"\n"+"Available Capacity Dose2: "+event.item.available_capacity_dose2);
     }
 
     const getJabsEvents = () => {
@@ -79,11 +92,22 @@ function Home() {
                         if (result.sessions !== undefined) {
                             result.sessions.map((item, index) => {
                                 let temp = [];
-                                temp['title'] = item.name + "-" + item.min_age_limit + "+(" + item.vaccine + ")";
+                                temp['title'] = item.name + "-" + item.min_age_limit + "+(" + item.vaccine + ")"+"-"+item.pincode;
                                 temp['allDay'] = true;
                                 let tempDate = item.date.split('-');
                                 temp['start'] = new Date(tempDate[2], tempDate[1] - 1, tempDate[0]);
                                 temp['end'] = new Date(tempDate[2], tempDate[1] - 1, tempDate[0]);
+
+                                if(item.available_capacity_dose1==0){
+                                    item.color='red'
+                                }else{
+                                    if(item.available_capacity_dose1<10){
+                                        item.color='yellow';
+                                    }else{
+                                        item.color='green';
+                                    }
+                                }
+
                                 temp['item'] = item;
                                 sessionsTemp.push(temp);
                             })
@@ -145,6 +169,7 @@ function Home() {
                     style={{ height: 500 }}
                     key={jabsEventsKey}
                     onSelectEvent={event => showEventModal(event)}
+                    eventPropGetter={(eventStyleGetter)}
                 />
             </div>
             {ajaxLoading &&
