@@ -184,9 +184,8 @@ function Home() {
             }
             <div className="footer">
                 <p>
-                    This cowin calendar has been created using the APIs provided by the https://apisetu.gov.in and its created as a study material of mine.
-                    I will not be responsibe for any kind of loss or any other kind of difficulties which
-                    can be caused due this app.
+                    This cowin calendar was created using the APIs provided by the https://apisetu.gov.in and its created as a study material of mine.
+                    I will not be responsibe for any kind of loss or any difficulties which can be caused by this app.
                 </p>
             </div>
         </div>
